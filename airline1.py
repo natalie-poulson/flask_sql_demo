@@ -31,9 +31,7 @@ def book():
         return render_template('error.html', message="No such flight with that id.")
 
     # Add passenger
-    passenger = Passenger(name=name, fligh_id=flight_id)
-    db.session.add(passenger)
-    db.session.commit()
+    flight.add_passenger(name)
     return render_template('success.html')
 
 @app.route('/flights')
@@ -49,5 +47,5 @@ def flight(flight_id):
         render_template('error.html', message="No such flight.")
 
     # Get all passengers
-    passengers = Passenger.query.filter_by(flight_id=flight_id).all()
+    passengers = flight.passengers
     return render_template('flight.html', flight=flight, passengers=passengers)
